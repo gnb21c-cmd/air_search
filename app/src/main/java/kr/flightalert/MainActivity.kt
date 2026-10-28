@@ -99,6 +99,10 @@ private fun openBrowser(context: Context, url: String) {
     context.startActivity(Intent(context, BrowserActivity::class.java).putExtra(BrowserActivity.EXTRA_URL, url))
 }
 
+private fun openDiagnose(context: Context, url: String) {
+    context.startActivity(Intent(context, DiagnoseActivity::class.java).putExtra(BrowserActivity.EXTRA_URL, url))
+}
+
 private val TIME = SimpleDateFormat("M/d HH:mm", Locale.KOREA)
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -235,6 +239,9 @@ private fun WatchCard(w: Watch, history: List<PricePoint>, status: CheckStatus?)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Button(onClick = { Scheduler.checkNow(context, w.id) }, enabled = !expired) { Text("지금 확인") }
                 OutlinedButton(onClick = { openBrowser(context, Skyscanner.searchUrl(w)) }) { Text("스카이스캐너 열기") }
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                TextButton(onClick = { openDiagnose(context, Skyscanner.searchUrl(w)) }) { Text("점검") }
                 TextButton(onClick = { confirmDelete = true }) { Text("삭제", color = Color(0xFFC62828)) }
             }
         }

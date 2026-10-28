@@ -34,6 +34,10 @@ object SkyscannerFetcher {
     private const val TIMEOUT_MS = 100_000L
     private const val SETTLE_MS = 12_000L // 마지막 가격이 들어온 뒤 이만큼 조용하면 검색이 끝난 것으로 봄
     private const val MIN_WAIT_MS = 20_000L
+    // .co.kr 에서 다른 스카이스캐너 주소로 넘어가도 엿보기가 붙도록
+    private val SKYSCANNER_ORIGINS = setOf(
+        "https://*.skyscanner.co.kr", "https://*.skyscanner.net", "https://*.skyscanner.com",
+    )
 
     private val PROBE = """
         (function(){
@@ -61,7 +65,7 @@ object SkyscannerFetcher {
         web.settings.userAgentString = userAgent(context)
         val hook = context.assets.open("hook.js").bufferedReader().use { it.readText() }
         if (WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
-            WebViewCompat.addDocumentStartJavaScript(web, hook, setOf("https://*.skyscanner.co.kr"))
+            WebViewCompat.addDocumentStartJavaScript(web, hook, SKYSCANNER_ORIGINS)
         }
         web.tag = hook
     }

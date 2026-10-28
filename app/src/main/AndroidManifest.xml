@@ -29,5 +29,10 @@
             android:name=".BrowserActivity"
             android:exported="false"
             android:label="스카이스캐너" />
+
+        <activity
+            android:name=".DiagnoseActivity"
+            android:exported="false"
+            android:label="점검" />
     </application>
 </manifest>
